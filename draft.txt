@@ -1,0 +1,90 @@
+não vamos fazer nada disso, vamos pensar no seguinte:
+os atributos de combate serão:
+vida(v),dano(d),velocidade de ataque(va),esquiva(e),chance de crítico(cc),dano crítico(dc).
+
+cada classe terá de forma inicial o tier 0 e seus atributos serão, por exemplo:
+
+mago:
+v=100
+d=90
+va=105
+e=85
+cc=115
+dc=105
+
+arqueiro:
+v=85
+d=95
+va=115
+e=100
+cc=110
+dc=95
+
+assassino:
+v=60
+d=110
+va=120
+e=115
+cc=90
+dc=105
+
+guerreiro:
+v=130
+d=90
+va=70
+e=80
+cc=100
+dc=120
+
+adaga:
+d=10
+
+capa:
+e=10
+
+anel:
+cc=5
+
+no combate, será feito um cálculo para saber quem vai ganhar. Primeiro somamos o os atributos e fazemos a média, depois somamos a itens de ataque, vestimentas e acessórios.
+
+por exemplo: 
+
+assassino = soma dos atributos / 6 (quantidade de atributos) = 100 + adaga(10) + capa(10) + anel(5) = 125
+inimigo (zumbi) = soma dos atributos / 6(quantidade de atributos) = 60
+
+as chances do assassino ganhar são de 125 / 125 + 60 (185) = 67.5% de chance de ganhar. sobrando 32.5% para o zumbi
+vai ser rolado um número aleatório para saber quem ganha.
+
+caso o jogador(assassino) ganhe, ele ganhará 32.5 pontos de experiência (xp) equivalente às chances de perder. O cansaço será aumentado no valor de 1/8 da chance de perder (4.06% nesse exemplo). O drop de itens terá uma chance do valor das chances de perda (32.5% nesse caso) e será sorteada uma raridade. A princípio serão as raridades com seus pesos:
+
+Comum: 1000 / 1441 ≈ 69,40%
+Raro: 300 / 1441 ≈ 20,81%
+Super Raro: 100 / 1441 ≈ 6,94%
+Épico: 30 / 1441 ≈ 2,08%
+Místico: 10 / 1441 ≈ 0,69%
+Lendário: 1 / 1441 ≈ 0,07%
+
+Essas porcentagens são as chances das raridades sairem no jogo, seja nos itens ou em qualquer outro cenário.
+
+caso o jogador seja derrotado, o cansaço dele aumentará no valor da chance de perder (32.5% nesse caso). O valor final do poder do jogador será reduzido pelo cansaço atual. Exemplo:
+O cansaço está em 32.5%, então o poder de combate do assassino são de: soma dos atributos / 6 (quantidade de atributos) = 100 + adaga(10) + capa(10) + anel(5) = 125 - (32.5% * 125) = 84,375.
+
+o Tier do jogador se dá pelo floor(numero_poder_bruto_sem_itens/100), no caso desse nosso assassino o tier seria 1 já que o poder é 100. Caso o poder de combate seja 645 o tier será 6.
+
+No drop de itens, o item dropado terá um poder de combate de 5% * raridade (comum:1 , místico: 5, lendário: 6) do poder de combate atual do jogador (100 nesse caso).
+
+No drop de itens, a raridade determinará quantos atributos serão influenciados por aquele item. exemplo:
+
+item comum:
+d=2
+
+item super raro:
+d=4
+e=2
+cc=1
+
+atributos escolhidos aleatoriamente
+
+O jogador "sobe de nível" (não haverá nivel numerico além da dinâmica do tier) ao atingir 100 + (tier - 1) * 50 pontos de experiência. Toda vez que ele atinge essa recompensa, duas opções aparecerão para ele escolher sobre o que vai melhorar de seus atributos. Um sorteio aleatório é feito para saber quais atributos estarão nas opções do usuário. outra opção será para saber o quanto esses 2 atributos serão melhorados: primeiramente nós iremos sortear uma raridade conforme as chances das raridades, o valor a ser melhorado será de 30 * raridade (comum:1 , místico: 5, lendário: 6). 
+
+Anote tudo isso, iremos adicionar essas dinâmicas no markdown a partir das interações.
