@@ -1,50 +1,88 @@
-import placeholder from '../../assets/placeholder.png'; // Ajuste o caminho conforme a estrutura
+import placeholder from '../../assets/placeholder.png'; // Caminho do placeholder
 import { useState } from 'react';
-import styled from 'styled-components'; // Importando styled-components
+import styled from 'styled-components'; // Estilos usando styled-components
 
-// Estilos para o inventário
-const ItemContainer = styled.div`
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 2px solid #d35400;
+// Estilos para o container do inventário com flexbox
+const InventoryContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const Slot = styled.div`
+  // background-color: #1f1f1f;
+  // border: 2px solid #d35400;
   border-radius: 8px;
-  background-color: #1f1f1f;
-  box-shadow: 0 0 10px rgba(211, 84, 0, 0.7);
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3px;
+  // box-shadow: 0 0 10px rgba(211, 84, 0, 0.7);
+
+  img {
+    width: 70px;
+    // height: 25%;
+  }
+
   &:hover {
     background-color: #333;
     cursor: pointer;
   }
+`;
 
-  img {
-    width: 100px;
-    height: 100px;
-    border-radius: 4px;
-  }
+const SlotsName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1px;
+  font-weight: bold;
 
-  p {
-    color: #fff;
-    margin-top: 10px;
+  h4 {
+    font-size: 14px;
+    width: 70px;
+    text-align: center;
   }
 `;
 
+const SlotsEmpty = styled.div`
+  width: 70px;
+  height: 70px;
+  border: 2px solid #d35400;
+  border-radius: 8px;
+  margin-bottom: 3px;
+`;
+
 const Inventory = () => {
-  // Estado para armazenar os itens do inventário
-  const [items, setItems] = useState([
-    { id: 1, name: 'Item 1', img: placeholder },
-    { id: 2, name: 'Item 2', img: placeholder },
-    // Adicione mais itens conforme necessário
-  ]);
+  // Simulando slots vazios
+  const [slots] = useState(new Array(5).fill(placeholder));
+  const [slotsMain] = useState(new Array(4).fill(placeholder));
 
   return (
-    <div>
-      {items.map(item => (
-        <ItemContainer key={item.id}>
-          <img src={item.img} alt={item.name} />
-          <p>{item.name}</p>
-        </ItemContainer>
-      ))}
-    </div>
+    <>
+      <h3>Inventory</h3>
+      <SlotsName>
+        <h4>Arma</h4>
+        <h4>Veste</h4>
+        <h4>Acessório</h4>
+        <h4>Mochila</h4>
+      </SlotsName>
+      <InventoryContainer>
+        {slotsMain.map((slot, index) => (
+          <Slot key={index}>
+            <img src={slot} alt={`Slot ${index + 1}`} />
+          </Slot>
+        ))}
+      </InventoryContainer>
+      <SlotsName>
+        <h4>Slots</h4>
+      </SlotsName>
+      <InventoryContainer>
+        {slots.map((slot, index) => (
+          <Slot key={index}>
+            <img src={slot} alt={`Slot ${index + 1}`} />
+          </Slot>
+        ))}
+      </InventoryContainer>
+    </>
   );
 };
 

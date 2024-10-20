@@ -4,18 +4,20 @@ import styled from 'styled-components';
 const AtributosContainer = styled.div`
   background-color: transparent; /* Remover fundo */
   color: #fff; /* Cor do texto */
-  padding: 10px;
+  // padding: 10px;
   border-radius: 8px;
   font-size: 1rem;
 
   .atributos-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
+    justify-content: space-between;
   }
 
   p {
     width: 32%;
+    text-align: center;
+    font-size: 14px;
     padding: 1px 3px;
     border: 1px solid #d35400;
     border-radius: 5px;
